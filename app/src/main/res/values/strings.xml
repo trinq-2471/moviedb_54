@@ -5,4 +5,7 @@
     <string name="hot">Hot</string>
     <string name="genres">Genres</string>
     <string name="favorite">Favorite</string>
+    <string name="popular">popular</string>
+    <string name="top_rate">Top Rate</string>
+    <string name="up_coming">Up Coming</string>
 </resources>
