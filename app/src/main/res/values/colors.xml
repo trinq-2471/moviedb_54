@@ -10,4 +10,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFE500</color>
     <color name="blue_dark">#081B27</color>
+    <color name="blue_light">#163347</color>
 </resources>
