@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screen.genres.GenresFragment"
-    android:background="@color/teal_200">
-</FrameLayout>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sun.moviedb_54.screen.genres.GenresViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue_dark"
+        tools:context=".screen.genres.GenresFragment"/>
+</layout>
