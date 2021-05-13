@@ -26,4 +26,16 @@ class MovieRemoteDataSource(private val apiService: APIService) : MovieDataSourc
     override suspend fun searchMovie(page: Int, query: String) = withContext(Dispatchers.IO) {
         return@withContext apiService.searchMovie(page, query)
     }
+
+    override suspend fun getDetailMovie(idMovie: Int) = withContext(Dispatchers.IO) {
+        return@withContext apiService.getDetailMovie(idMovie)
+    }
+
+    override suspend fun getActor(idMovie: Int) = withContext(Dispatchers.IO) {
+        return@withContext apiService.getActor(idMovie)
+    }
+
+    override suspend fun getRecommendMovie(idMovie: Int)= withContext(Dispatchers.IO) {
+        return@withContext apiService.getRecommendMovie(idMovie)
+    }
 }
