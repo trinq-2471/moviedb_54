@@ -5,17 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.sun.moviedb_54.R
+import com.sun.moviedb_54.data.model.GenresResult
 import com.sun.moviedb_54.databinding.FragmentGenresBinding
-import com.sun.moviedb_54.ultis.Status
+import com.sun.moviedb_54.screen.genres.adapter.GenresAdapter
+import com.sun.moviedb_54.screen.genres.adapter.GenresMovieAdapter
+import com.sun.moviedb_54.screen.genres.adapter.GenresSelectedAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class GenresFragment : Fragment() {
 
     private lateinit var binding: FragmentGenresBinding
+    private lateinit var genresAdapter: GenresAdapter
+    private lateinit var genresMovieAdapter: GenresMovieAdapter
+    private lateinit var genresSelectedAdapter: GenresSelectedAdapter
     private val viewModel: GenresViewModel by viewModel()
 
     override fun onCreateView(
@@ -32,35 +37,50 @@ class GenresFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
         registerLiveData()
+    }
+
+    private fun initViews() {
+        genresAdapter = GenresAdapter { genresResult: GenresResult, position: Int ->
+            binding.recyclerViewGenresMovie.layoutManager?.scrollToPosition(0)
+            genresAdapter.selectedGenres(position)
+            genresResult.positionSelected = position
+            with(viewModel) {
+                addGenresSelected(genresResult)
+                getGenresMovie(getGenresSelected())
+            }
+        }
+        genresMovieAdapter = GenresMovieAdapter {
+        }
+        genresSelectedAdapter =
+            GenresSelectedAdapter { positionSelected: Int?, genresResult: GenresResult ->
+                binding.recyclerViewGenresMovie.layoutManager?.scrollToPosition(0)
+                genresAdapter.unselectedGenres(positionSelected)
+                with(viewModel) {
+                    removeGenresSelected(genresResult)
+                    getGenresMovie(getGenresSelected())
+                }
+            }
+        with(binding) {
+            genresAdapter = this@GenresFragment.genresAdapter
+            genresMovieAdapter = this@GenresFragment.genresMovieAdapter
+            genresSelectedAdapter = this@GenresFragment.genresSelectedAdapter
+        }
     }
 
     private fun registerLiveData() {
         genresResultObserve()
-        genresMovieResultObserve()
     }
 
     private fun genresResultObserve() {
-        viewModel.genresResult.observe(viewLifecycleOwner, Observer { resource ->
-            val data = resource.data
-            when (resource.status) {
-                Status.SUCCESS -> {
-                }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-    }
-
-    private fun genresMovieResultObserve() {
-        viewModel.genresMovieResult.observe(viewLifecycleOwner, Observer { resource ->
-            val data = resource.data
-            when (resource.status) {
-                Status.SUCCESS -> {
-                }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
+        viewModel.genresResults.observe(viewLifecycleOwner, Observer { genresResults ->
+            genresResults.first().let {
+                it.isSelected = true
+                it.positionSelected = 0
+                with(viewModel) {
+                    addGenresSelected(it)
+                    getGenresMovie(getGenresSelected())
                 }
             }
         })

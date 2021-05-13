@@ -1,65 +1,107 @@
 package com.sun.moviedb_54.screen.genres
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sun.moviedb_54.data.model.GenresResult
 import com.sun.moviedb_54.data.model.GenresMovieResult
 import com.sun.moviedb_54.data.source.repository.MovieRepository
-import com.sun.moviedb_54.extensions.plusAssignResource
-import com.sun.moviedb_54.ultis.Resource
+import com.sun.moviedb_54.extensions.plusAssign
+import com.sun.moviedb_54.ultis.Constant
+import com.sun.moviedb_54.ultis.Constant.STRING_EMPTY
+import com.sun.moviedb_54.ultis.LoadMoreRecyclerViewListener
 import kotlinx.coroutines.launch
 
-class GenresViewModel(private val movieRepository: MovieRepository) : ViewModel() {
+class GenresViewModel(private val movieRepository: MovieRepository) : ViewModel(),
+    LoadMoreRecyclerViewListener {
 
-    private val _genres = MutableLiveData<Resource<MutableList<GenresResult>>>()
-    val genresResult: MutableLiveData<Resource<MutableList<GenresResult>>>
+    private val _genres = MutableLiveData<MutableList<GenresResult>>()
+    val genresResults: MutableLiveData<MutableList<GenresResult>>
         get() = _genres
-    private val _genresMovies = MutableLiveData<Resource<MutableList<GenresMovieResult>>>()
-    val genresMovieResult: MutableLiveData<Resource<MutableList<GenresMovieResult>>>
+    private val _genresMovies = MutableLiveData<MutableList<GenresMovieResult>>()
+    val genresMovieResults: MutableLiveData<MutableList<GenresMovieResult>>
         get() = _genresMovies
-    private val _genresSelected = MutableLiveData<MutableList<GenresResult>>()
-    val genresResultSelected: MutableLiveData<MutableList<GenresResult>>
-        get() = _genresSelected
-    private var isLoading = MutableLiveData<Boolean>()
+    private val _genresSelectedResults = MutableLiveData<MutableList<GenresResult>>()
+    val genresSelectedResults: MutableLiveData<MutableList<GenresResult>>
+        get() = _genresSelectedResults
+    private val _isLoad = MutableLiveData<Boolean>(false)
+    val isLoad: MutableLiveData<Boolean>
+        get() = _isLoad
+    private var currentPage = Constant.DEFAULT_PAGE
 
     init {
         getGenres()
     }
 
-    fun getGenres() {
+    override fun onLoadData() {
+        _isLoad.value = true
+        addLoadingGenresMovie()
+        Handler(Looper.getMainLooper()).postDelayed({
+            removeLoadingGenresMovie()
+            currentPage++
+            getGenresMovie(getGenresSelected(), currentPage)
+            _isLoad.value = false
+        }, Constant.DELAY_SECOND)
+    }
+
+    private fun getGenres() {
         viewModelScope.launch {
             try {
                 movieRepository.getGenres().apply {
                     body()?.let {
-                        _genres.postValue(Resource.success(it.results))
+                        _genres.plusAssign(it.results)
                     }
                 }
             } catch (e: Exception) {
-                _genres.postValue(Resource.error(null, e.localizedMessage))
+                e.printStackTrace()
             }
         }
     }
 
-    fun getGenresMovie(page: Int, genres: String) {
+    fun getGenresMovie(genres: String, page: Int = Constant.DEFAULT_PAGE) {
         viewModelScope.launch {
             try {
                 movieRepository.getGenresMovie(page, genres).apply {
                     body()?.let {
-                        _genresMovies.plusAssignResource(it.results)
+                        _genresMovies.plusAssign(it.results)
                     }
                 }
             } catch (e: Exception) {
-                _genresMovies.postValue(Resource.error(null, e.localizedMessage))
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun addLoadingGenresMovie() {
+        _genresMovies.plusAssign(GenresMovieResult())
+    }
+
+    private fun removeLoadingGenresMovie() {
+        if (_isLoad.value == true) {
+            _genresMovies.value?.let {
+                it.removeAt(it.size - 1)
             }
         }
     }
 
     fun addGenresSelected(genresResult: GenresResult) {
-        _genresSelected.value?.add(genresResult)
+        currentPage = Constant.DEFAULT_PAGE
+        _genresMovies.value?.clear()
+        _genresSelectedResults.plusAssign(genresResult)
     }
 
-    fun removeGenresSelected(positionRemove: Int) {
-        _genresSelected.value?.removeAt(positionRemove)
+    fun removeGenresSelected(genresResult: GenresResult) {
+        val value = _genresSelectedResults.value ?: mutableListOf()
+        value.remove(genresResult)
+        _genresMovies.value?.clear()
+        _genresSelectedResults.postValue(value)
+    }
+
+    fun getGenresSelected(): String {
+        return _genresSelectedResults.value?.joinToString(Constant.SEPARATOR) {
+            it.id.toString()
+        } ?: STRING_EMPTY
     }
 }

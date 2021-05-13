@@ -3,6 +3,7 @@ package com.sun.moviedb_54.ultis
 import android.widget.ImageView
 import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sun.moviedb_54.extensions.loadFromUrl
@@ -42,6 +43,13 @@ fun RecyclerView.onScrollListener(
             (recyclerView.layoutManager as LinearLayoutManager).run {
                 if (dy > 0) {
                     if (!isLoad && findLastCompletelyVisibleItemPosition() == itemCount - 1) {
+                        loadMoreListener.onLoadData()
+                    }
+                }
+            }
+            (recyclerView.layoutManager as GridLayoutManager).run {
+                if (dy > 0) {
+                    if (!isLoad && (childCount + findFirstVisibleItemPosition()) >= itemCount) {
                         loadMoreListener.onLoadData()
                     }
                 }
