@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sun.moviedb_54.screen.genres.adapter.itemviewholder.GenresSelectedItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayoutGenres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{viewModel::onItemClicked}">
+
+        <TextView
+            android:id="@+id/textGenresSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@{viewModel.genresResultSelected.name}"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/imageUnselected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_delete" />
+    </LinearLayout>
+</layout>

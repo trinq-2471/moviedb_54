@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sun.moviedb_54.screen.genres.adapter.itemviewholder.GenresItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@{viewModel.genresResult.selected ? @color/red : @color/twine}"
+        android:onClick="@{viewModel::onItemClicked}">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@{viewModel.genresResult.name}"
+            android:textColor="@{viewModel.genresResult.selected ? @color/white : @color/black}" />
+    </LinearLayout>
+</layout>

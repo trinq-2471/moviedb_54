@@ -8,4 +8,8 @@ object Constant {
     const val API_KEY = BuildConfig.API_KEY
     const val DEFAULT_PAGE = 1
     const val BASE_LANGUAGE = "en-US"
+    const val POSITION_DEFAULT = -1
+    const val SEPARATOR = ", "
+    const val STRING_EMPTY =""
+    const val DELAY_SECOND = 1500L
 }

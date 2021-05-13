@@ -1,17 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
             type="com.sun.moviedb_54.screen.genres.GenresViewModel" />
+
+        <variable
+            name="genresAdapter"
+            type="com.sun.moviedb_54.screen.genres.adapter.GenresAdapter" />
+
+        <variable
+            name="genresMovieAdapter"
+            type="com.sun.moviedb_54.screen.genres.adapter.GenresMovieAdapter" />
+
+        <variable
+            name="genresSelectedAdapter"
+            type="com.sun.moviedb_54.screen.genres.adapter.GenresSelectedAdapter" />
     </data>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_dark"
-        tools:context=".screen.genres.GenresFragment"/>
+        android:background="@color/blue_dark">
+
+        <TextView
+            android:id="@+id/textViewGenresTittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/choose_a_genres"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewGenres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@color/twine"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGenresTittle"
+            bind:adapter="@{genresAdapter}"
+            bind:data="@{viewModel.genresResults}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewGenresSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewGenres"
+            bind:adapter="@{genresSelectedAdapter}"
+            bind:data="@{viewModel.genresSelectedResults}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewGenresMovie"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/blue_dark"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewGenresSelected"
+            app:spanCount="2"
+            bind:adapter="@{genresMovieAdapter}"
+            bind:data="@{viewModel.genresMovieResults}"
+            bind:isLoad="@{viewModel.isLoad()}"
+            bind:onLoadMore="@{viewModel.onLoadData}"
+            tools:listitem="@layout/item_genres_movie" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
