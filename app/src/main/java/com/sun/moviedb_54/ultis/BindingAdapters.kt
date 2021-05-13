@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sun.moviedb_54.extensions.loadFromUrl
 import com.sun.moviedb_54.extensions.setVoteRating
 
-@BindingAdapter("bind:onLoadImage")
-fun ImageView.loadImage(url: String) {
+@BindingAdapter("bind:onLoadImg")
+fun ImageView.loadImage(url: String?) {
     loadFromUrl(Constant.BASE_URL_IMAGE + url)
 }
 

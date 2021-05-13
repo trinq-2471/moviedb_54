@@ -11,6 +11,7 @@ import com.sun.moviedb_54.screen.hot.HotFragment
 import com.sun.moviedb_54.screen.search.SearchFragment
 import com.sun.moviedb_54.R
 import com.sun.moviedb_54.extensions.addFragment
+import com.sun.moviedb_54.screen.detailmovie.DetailMovieFragment
 import com.sun.moviedb_54.ultis.ItemBottomNav
 import kotlinx.android.synthetic.main.fragment_home_page.*
 
@@ -32,7 +33,8 @@ class HomePageFragment : Fragment() {
 
     private fun initListener() {
         edtSearch.setOnClickListener {
-            addFragment(SearchFragment.newInstance(), R.id.mainFrame)
+//            addFragment(SearchFragment.newInstance(), R.id.mainFrame)
+            addFragment(DetailMovieFragment.newInstance(460465), R.id.mainFrame)
         }
     }
 
