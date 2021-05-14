@@ -11,7 +11,9 @@ import com.sun.moviedb_54.extensions.setVoteRating
 
 @BindingAdapter("bind:onLoadImage")
 fun ImageView.loadImage(url: String?) {
-    loadFromUrl(Constant.BASE_URL_IMAGE + url)
+    url?.let {
+        loadFromUrl(Constant.BASE_URL_IMAGE + url)
+    }
 }
 
 @BindingAdapter("bind:setVoteRating")
