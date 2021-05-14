@@ -1,4 +1,4 @@
-package com.sun.moviedb_54.data.source.remote
+package com.sun.moviedb_54.data.source.remote.api
 
 import com.sun.moviedb_54.data.model.GenresMovieResponse
 import com.sun.moviedb_54.data.model.GenresResponse
@@ -34,4 +34,12 @@ interface APIService {
         @Query("language") language: String = Constant.BASE_LANGUAGE,
         @Query("sort_by") typeSort: String = SortType.DESC.value
     ): Response<GenresMovieResponse>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("page") page: Int,
+        @Query("query") query: String,
+        @Query("api_key") apiKey: String = Constant.API_KEY,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Response<MovieResponse>
 }

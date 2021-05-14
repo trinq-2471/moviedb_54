@@ -2,8 +2,8 @@ package com.sun.moviedb_54.module
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.sun.moviedb_54.data.source.remote.APIService
-import com.sun.moviedb_54.data.source.remote.RetrofitClient
+import com.sun.moviedb_54.data.source.remote.api.APIService
+import com.sun.moviedb_54.data.source.remote.client.RetrofitClient
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.converter.gson.GsonConverterFactory
