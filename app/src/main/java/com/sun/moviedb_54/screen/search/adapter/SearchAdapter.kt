@@ -52,7 +52,11 @@ class SearchAdapter(
 
     override fun setData(data: MutableList<MovieResult>?) {
         data?.let {
-            submitList(it)
+            if (it == currentList) {
+                notifyDataSetChanged()
+            } else {
+                submitList(it)
+            }
         }
     }
 
