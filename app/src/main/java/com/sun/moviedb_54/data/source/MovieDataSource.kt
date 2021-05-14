@@ -1,8 +1,6 @@
 package com.sun.moviedb_54.data.source
 
-import com.sun.moviedb_54.data.model.GenresMovieResponse
-import com.sun.moviedb_54.data.model.GenresResponse
-import com.sun.moviedb_54.data.model.MovieResponse
+import com.sun.moviedb_54.data.model.*
 import com.sun.moviedb_54.ultis.HotMovieType
 import retrofit2.Response
 
@@ -17,6 +15,12 @@ interface MovieDataSource {
         suspend fun getGenresMovie(page: Int, genres: String): Response<GenresMovieResponse>
 
         suspend fun searchMovie(page: Int, query: String): Response<MovieResponse>
+
+        suspend fun getDetailMovie(idMovie : Int) : Response<DetailMovie>
+
+        suspend fun getActor(idMovie : Int) : Response<ActorResponse>
+
+        suspend fun getRecommendMovie(idMovie : Int) : Response<MovieResponse>
     }
 
     interface Local {

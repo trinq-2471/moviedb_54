@@ -15,4 +15,10 @@ class MovieRepository(private val remote: MovieDataSource.Remote) {
     suspend fun getGenresMovie(page: Int, genres: String) = remote.getGenresMovie(page, genres)
 
     suspend fun searchMovie(page: Int, query: String) = remote.searchMovie(page, query)
+
+    suspend fun getDetailMovie(idMovie : Int) = remote.getDetailMovie(idMovie)
+
+    suspend fun getActor(idMovie : Int) = remote.getActor(idMovie)
+
+    suspend fun getRecommendMovie(idMovie : Int) = remote.getRecommendMovie(idMovie)
 }
