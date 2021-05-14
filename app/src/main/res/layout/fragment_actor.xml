@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_dark"
+    tools:context=".screen.actor.ActorFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageBack"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textNameActor"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                android:layout_marginEnd="@dimen/dp_50"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewImageActor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/dp_10"
+                app:cardCornerRadius="@dimen/dp_10"
+                app:layout_constraintDimensionRatio="783:1174"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textNameActor"
+                app:layout_constraintWidth_percent="0.4">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imagePosterActor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textPersonalInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="@string/personal_info"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewImageActor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewImageActor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewBirthdayTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/custom_hot_screen_button"
+                android:paddingHorizontal="@dimen/dp_8"
+                android:text="@string/birthday"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textPersonalInfo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/texViewBirthday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewKnownFor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBirthdayTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewAddressTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@drawable/custom_hot_screen_button"
+                android:paddingHorizontal="@dimen/dp_8"
+                android:text="@string/place_of_birth"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texViewBirthday" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/texViewAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewKnownFor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAddressTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewGenderTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@drawable/custom_hot_screen_button"
+                android:paddingHorizontal="@dimen/dp_8"
+                android:text="@string/gender"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/texViewAddress" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/texViewGender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewKnownFor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGenderTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewBiographyTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:background="@drawable/custom_hot_screen_button"
+                android:paddingHorizontal="@dimen/dp_8"
+                android:text="@string/biography"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texViewGender" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/texViewBiography"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/recyclerViewKnownFor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBiographyTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textKnownFor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/known_for"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/cardViewImageActor"
+                app:layout_constraintTop_toBottomOf="@+id/textNameActor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewKnownFor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardViewImageActor"
+                app:layout_constraintTop_toBottomOf="@+id/textKnownFor"
+                tools:listitem="@layout/item_recommendations" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
