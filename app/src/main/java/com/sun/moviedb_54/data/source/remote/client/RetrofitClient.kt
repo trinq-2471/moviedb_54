@@ -1,4 +1,4 @@
-package com.sun.moviedb_54.data.source.remote
+package com.sun.moviedb_54.data.source.remote.client
 
 import com.sun.moviedb_54.ultis.Constant.BASE_URL
 import okhttp3.OkHttpClient
