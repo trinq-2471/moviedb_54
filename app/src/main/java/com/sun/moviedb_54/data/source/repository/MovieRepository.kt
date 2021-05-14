@@ -35,4 +35,8 @@ class MovieRepository(
     suspend fun addMovieFavorite(movieFavorite: MovieFavorite) = local.addMovieFavorite(movieFavorite)
 
     suspend fun deleteMovieFavorite(movieFavorite: MovieFavorite) = local.deleteMovieFavorite(movieFavorite)
+
+    suspend fun getActorDetail(idActor: Int) = remote.getActorDetail(idActor)
+
+    suspend fun getMovieByActor(idActor: Int) = remote.getMovieByActor(idActor)
 }

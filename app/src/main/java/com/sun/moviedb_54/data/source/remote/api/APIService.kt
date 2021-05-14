@@ -35,21 +35,21 @@ interface APIService {
 
     @GET("movie/{id}?")
     suspend fun getDetailMovie(
-        @Path("id") id : Int,
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = Constant.API_KEY,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Response<DetailMovie>
 
     @GET("movie/{id}/credits?")
     suspend fun getActor(
-        @Path("id") id : Int,
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = Constant.API_KEY,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Response<ActorResponse>
 
     @GET("movie/{id}/recommendations?")
     suspend fun getRecommendMovie(
-        @Path("id") id : Int,
+        @Path("id") id: Int,
         @Query("api_key") apiKey: String = Constant.API_KEY,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Response<MovieResponse>
@@ -60,6 +60,21 @@ interface APIService {
         @Query("query") query: String,
         @Query("api_key") apiKey: String = Constant.API_KEY,
         @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Response<MovieResponse>
+
+    @GET("person/{idActor}")
+    suspend fun getActorDetail(
+        @Path("idActor") idActor: Int,
+        @Query("api_key") apiKey: String = Constant.API_KEY,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Response<ActorDetail>
+
+    @GET("discover/movie")
+    suspend fun getMovieByActor(
+        @Query("api_key") apiKey: String = Constant.API_KEY,
+        @Query("language") language: String = Constant.BASE_LANGUAGE,
+        @Query("sort_by") sortBy: String = Constant.BASE_SORT_BY_POPULARITY,
+        @Query("with_cast") idActor: Int
     ): Response<MovieResponse>
 
     @GET("movie/{id}/videos?")

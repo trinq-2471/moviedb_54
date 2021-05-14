@@ -41,7 +41,7 @@ class HotMovieViewModel(private val movieRepository: MovieRepository) : ViewMode
                 fetchDataHotMovie(currentPage, it)
             }
             _isLoad.value = false
-        }, 1500)
+        }, Constant.DELAY_SECOND)
     }
 
     fun fetchDataHotMovie(

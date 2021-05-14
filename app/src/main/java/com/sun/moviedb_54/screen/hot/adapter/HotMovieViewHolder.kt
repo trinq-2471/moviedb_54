@@ -8,7 +8,8 @@ import com.sun.moviedb_54.screen.hot.viewmodel.HotMovieItemViewModel
 
 class HotMovieViewHolder(
     private val binding: ItemHotMovieBinding,
-    private val itemViewModel: HotMovieItemViewModel = HotMovieItemViewModel()
+    private val onClickListener: (Int) -> Unit,
+    private val itemViewModel: HotMovieItemViewModel = HotMovieItemViewModel(onClickListener)
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {

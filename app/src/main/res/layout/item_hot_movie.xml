@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_20">
+        android:layout_marginBottom="@dimen/dp_20"
+        android:onClick="@{viewModel::onItemClicked}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageHotMovie"
