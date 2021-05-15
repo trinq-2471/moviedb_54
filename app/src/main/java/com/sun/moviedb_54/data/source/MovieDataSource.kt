@@ -21,8 +21,17 @@ interface MovieDataSource {
         suspend fun getActor(idMovie : Int) : Response<ActorResponse>
 
         suspend fun getRecommendMovie(idMovie : Int) : Response<MovieResponse>
+
+        suspend fun getTrailer(idMovie : Int) : Response<VideoResponse>
     }
 
     interface Local {
+        suspend fun getMovieFavorite() : MutableList<MovieFavorite>
+
+        suspend fun checkFavorite(id : Int) : MovieFavorite?
+
+        suspend fun addMovieFavorite(movieFavorite: MovieFavorite)
+
+        suspend fun deleteMovieFavorite(movieFavorite: MovieFavorite)
     }
 }

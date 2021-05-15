@@ -35,7 +35,11 @@ class MovieRemoteDataSource(private val apiService: APIService) : MovieDataSourc
         return@withContext apiService.getActor(idMovie)
     }
 
-    override suspend fun getRecommendMovie(idMovie: Int)= withContext(Dispatchers.IO) {
+    override suspend fun getRecommendMovie(idMovie: Int) = withContext(Dispatchers.IO) {
         return@withContext apiService.getRecommendMovie(idMovie)
+    }
+
+    override suspend fun getTrailer(idMovie: Int)= withContext(Dispatchers.IO) {
+        return@withContext apiService.getTrailer(idMovie)
     }
 }

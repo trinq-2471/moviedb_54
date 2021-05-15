@@ -19,7 +19,8 @@ class MyApplication : Application() {
                     viewModelModule,
                     dataSourceModule,
                     repositoryModule,
-                    apiModule
+                    apiModule,
+                    storageModule
                 )
             )
         }

@@ -15,5 +15,6 @@
     <string name="gender">Gender</string>
     <string name="known_for">Known For</string>
     <string name="biography">Biography</string>
+    <string name="no_video">No Video</string>
     <string name="results">Results</string>
 </resources>

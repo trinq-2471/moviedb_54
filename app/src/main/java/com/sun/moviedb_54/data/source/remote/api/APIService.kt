@@ -61,4 +61,12 @@ interface APIService {
         @Query("api_key") apiKey: String = Constant.API_KEY,
         @Query("language") language: String = Constant.BASE_LANGUAGE
     ): Response<MovieResponse>
+
+    @GET("movie/{id}/videos?")
+    suspend fun getTrailer(
+        @Path("id") id : Int,
+        @Query("api_key") apiKey: String = Constant.API_KEY,
+        @Query("language") language: String = Constant.BASE_LANGUAGE
+    ): Response<VideoResponse>
+
 }

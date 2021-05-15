@@ -12,4 +12,7 @@ object Constant {
     const val SEPARATOR = ", "
     const val STRING_EMPTY =""
     const val DELAY_SECOND = 1500L
+    const val URI_YOUTUBE_APP = "vnd.youtube:"
+    const val URI_YOUTUBE_WEBSITE = "http://www.youtube.com/watch?v="
+    const val DATABASE_NAME = "movieFavorite.db"
 }
