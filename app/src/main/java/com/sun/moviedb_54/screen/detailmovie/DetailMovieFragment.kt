@@ -1,14 +1,22 @@
 package com.sun.moviedb_54.screen.detailmovie
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.sun.moviedb_54.R
+import com.sun.moviedb_54.data.model.MovieFavorite
 import com.sun.moviedb_54.databinding.FragmentDetailMovieBinding
 import com.sun.moviedb_54.extensions.addFragment
+import com.sun.moviedb_54.ultis.Constant.URI_YOUTUBE_APP
+import com.sun.moviedb_54.ultis.Constant.URI_YOUTUBE_WEBSITE
+import kotlinx.android.synthetic.main.fragment_detail_movie.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieFragment : Fragment() {
@@ -39,6 +47,7 @@ class DetailMovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initData()
         initView()
+        initEvent()
     }
 
     private fun initData() {
@@ -47,6 +56,53 @@ class DetailMovieFragment : Fragment() {
 
     private fun initView() {
         binding.recommendAdapter = recommendationAdapter
+        idMovie?.let { checkFavorite(it) }
+    }
+
+    private fun initEvent() {
+        imageBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+        imagePlay.setOnClickListener {
+            detailMovieViewModel.keyYoutube?.let { key -> openYouTube(key) } ?: Toast.makeText(
+                context,
+                getString(R.string.no_video),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        imageFavorite.setOnClickListener {
+            if (detailMovieViewModel.isFavorite) {
+                detailMovieViewModel.deleteFavorite()
+                imageFavorite.setImageResource(R.drawable.ic_heart_default)
+            } else {
+                detailMovieViewModel.addFavorite()
+                imageFavorite.setImageResource(R.drawable.ic_heart_red)
+            }
+        }
+    }
+
+    private fun openYouTube(keyYoutube: String) {
+        try {
+            context?.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(URI_YOUTUBE_APP + keyYoutube)
+                )
+            )
+        } catch (e: ActivityNotFoundException) {
+            context?.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(URI_YOUTUBE_WEBSITE + keyYoutube)
+                )
+            )
+        }
+    }
+
+    private fun checkFavorite(id: Int) {
+        if (detailMovieViewModel.checkFavorite(id)) {
+            imageFavorite.setImageResource(R.drawable.ic_heart_red)
+        }
     }
 
     companion object {

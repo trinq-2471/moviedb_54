@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sun.moviedb_54.data.model.Actor
 import com.sun.moviedb_54.data.model.DetailMovie
+import com.sun.moviedb_54.data.model.MovieFavorite
 import com.sun.moviedb_54.data.model.MovieResult
 import com.sun.moviedb_54.data.source.repository.MovieRepository
 import com.sun.moviedb_54.extensions.plusAssign
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
@@ -42,6 +44,9 @@ class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewM
     val recommendMovie: LiveData<MutableList<MovieResult?>>
         get() = _recommendMovie
 
+    var keyYoutube: String? = null
+    var isFavorite = false
+
     fun getDetailMovie(idMovie: Int) {
         try {
             viewModelScope.launch {
@@ -54,7 +59,7 @@ class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewM
                     launch {
                         movieRepository.getDetailMovie(idMovie = idMovie).body()?.also {
                             _detailMovie.value = it
-                            _genres.value = it.genres.joinToString(", "){ genre ->
+                            _genres.value = it.genres.joinToString(", ") { genre ->
                                 genre.name
                             }
                             if (it.title.isNullOrEmpty()) {
@@ -73,12 +78,54 @@ class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewM
                             _recommendMovie.plusAssign(it.results)
                         }
                     }
-                } catch (e: java.lang.Exception) {
+                    launch {
+                        movieRepository.getTrailer(idMovie = idMovie).body()?.also {
+                            keyYoutube = it.results[0].key
+                        }
+                    }
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    fun addFavorite() {
+        isFavorite = true
+        detailMovie.value?.let {
+            val movieFavorite = MovieFavorite(it.id, it.title, it.photoPoster)
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    movieRepository.addMovieFavorite(movieFavorite)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    fun deleteFavorite() {
+        isFavorite = false
+        detailMovie.value?.let {
+            val movieFavorite = MovieFavorite(it.id, it.title, it.photoPoster)
+            viewModelScope.launch(Dispatchers.IO) {
+                try {
+                    movieRepository.deleteMovieFavorite(movieFavorite)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    fun checkFavorite(idMovie: Int): Boolean {
+        runBlocking {
+            if (movieRepository.checkFavorite(idMovie) != null) {
+                isFavorite = true
+            }
+        }
+        return isFavorite
     }
 }
