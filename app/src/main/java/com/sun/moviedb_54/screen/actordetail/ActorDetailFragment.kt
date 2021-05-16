@@ -11,6 +11,7 @@ import com.sun.moviedb_54.R
 import com.sun.moviedb_54.databinding.FragmentActorBinding
 import com.sun.moviedb_54.extensions.addFragment
 import com.sun.moviedb_54.screen.actordetail.adapter.MovieActorAdapter
+import com.sun.moviedb_54.screen.detailmovie.DetailMovieFragment
 import kotlinx.android.synthetic.main.fragment_actor.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -20,7 +21,7 @@ class ActorDetailFragment : Fragment() {
     private val detailActorViewModel by viewModel<ActorDetailViewModel>()
     private val movieActorAdapter by lazy {
         MovieActorAdapter {
-            addFragment(newInstance(it), R.id.mainFrame)
+            addFragment(DetailMovieFragment.newInstance(it), R.id.mainFrame)
         }
     }
 

@@ -8,8 +8,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 fun ImageView.loadFromUrl(url: String) {
     Glide.with(this.context.applicationContext)
         .load(url)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .skipMemoryCache(false)
+//        .transition(DrawableTransitionOptions.withCrossFade())
+//        .skipMemoryCache(false)
         .into(this)
 }
 
