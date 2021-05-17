@@ -13,6 +13,7 @@ import com.sun.moviedb_54.ultis.BindingDataRecyclerView
 import com.sun.moviedb_54.ultis.NoteDiffCallBack
 
 class HotMovieAdapter(
+    private val onItemClick: (Int) -> Unit
 ) : ListAdapter<MovieResult, RecyclerView.ViewHolder>(NoteDiffCallBack()),
     BindingDataRecyclerView<MutableList<MovieResult>> {
 
@@ -32,7 +33,7 @@ class HotMovieAdapter(
                 parent,
                 false
             )
-            HotMovieViewHolder(binding)
+            HotMovieViewHolder(binding, onItemClick)
         }
     }
 

@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.sun.moviedb_54.R
 import com.sun.moviedb_54.databinding.FragmentHotBinding
+import com.sun.moviedb_54.extensions.addFragment
+import com.sun.moviedb_54.screen.detailmovie.DetailMovieFragment
 import com.sun.moviedb_54.screen.hot.adapter.HotMovieAdapter
 import com.sun.moviedb_54.screen.hot.viewmodel.HotMovieViewModel
 import com.sun.moviedb_54.ultis.Constant
@@ -21,7 +23,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class HotFragment : Fragment() {
 
     private val hotMovieViewModel by viewModel<HotMovieViewModel>()
-    private val hotMovieAdapter by lazy { HotMovieAdapter() }
+    private val hotMovieAdapter by lazy {
+        HotMovieAdapter { addFragment(DetailMovieFragment.newInstance(it), R.id.mainFrame) }
+    }
     private lateinit var binding: FragmentHotBinding
 
     override fun onCreateView(
