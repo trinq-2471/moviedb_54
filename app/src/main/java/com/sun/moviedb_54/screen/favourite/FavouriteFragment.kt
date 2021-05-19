@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.sun.moviedb_54.R
 import com.sun.moviedb_54.databinding.FragmentFavouriteBinding
 import com.sun.moviedb_54.extensions.addFragment
 import com.sun.moviedb_54.screen.detailmovie.DetailMovieFragment
+import kotlinx.coroutines.runBlocking
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavouriteFragment : Fragment() {
@@ -39,11 +41,14 @@ class FavouriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         favoriteMovieViewModel.getAllFavoriteMovie()
         binding.favoriteAdapter = favoriteAdapter
+
         requireActivity().supportFragmentManager.addOnBackStackChangedListener {
             if (isCheckFavorite) {
-                favoriteMovieViewModel.favoriteMovie.value?.clear()
-                favoriteMovieViewModel.getAllFavoriteMovie()
-                isCheckFavorite = false
+                runBlocking {
+                    favoriteMovieViewModel.favoriteMovie.value?.clear()
+                    favoriteMovieViewModel.getAllFavoriteMovie()
+                    isCheckFavorite = false
+                }
             }
         }
     }

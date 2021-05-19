@@ -1,12 +1,17 @@
 package com.sun.moviedb_54.data.source.local
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.sun.moviedb_54.data.model.MovieFavorite
 import com.sun.moviedb_54.data.source.MovieDataSource
 import com.sun.moviedb_54.data.source.local.room.MovieFavoriteDAO
 
 class MovieLocalDataSource(private val movieFavoriteDAO: MovieFavoriteDAO) : MovieDataSource.Local {
 
-    override suspend fun getMovieFavorite(): MutableList<MovieFavorite>? =
+//    override suspend fun getMovieFavorite(): MutableLiveData<MutableList<MovieFavorite>> =
+//        movieFavoriteDAO.getAllMovie()
+
+    override suspend fun getMovieFavorite(): MutableList<MovieFavorite>  =
         movieFavoriteDAO.getAllMovie()
 
     override suspend fun checkFavorite(id: Int): MovieFavorite? =

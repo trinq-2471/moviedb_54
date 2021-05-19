@@ -1,5 +1,7 @@
 package com.sun.moviedb_54.data.source
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.sun.moviedb_54.data.model.*
 import com.sun.moviedb_54.ultis.HotMovieType
 import retrofit2.Response
@@ -30,7 +32,8 @@ interface MovieDataSource {
     }
 
     interface Local {
-        suspend fun getMovieFavorite() : MutableList<MovieFavorite>?
+//        suspend fun getMovieFavorite() : MutableLiveData<MutableList<MovieFavorite>>
+        suspend fun getMovieFavorite() : MutableList<MovieFavorite>
 
         suspend fun checkFavorite(id: Int): MovieFavorite?
 

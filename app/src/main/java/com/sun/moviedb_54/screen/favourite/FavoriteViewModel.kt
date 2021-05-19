@@ -11,15 +11,26 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-    private val _favoriteMovie = MutableLiveData<MutableList<MovieFavorite>>()
+//    private var _favoriteMovie = MutableLiveData<MutableList<MovieFavorite>>()
+//    val favoriteMovie: LiveData<MutableList<MovieFavorite>>
+//        get() = _favoriteMovie
+
+
+    private var _favoriteMovie = MutableLiveData<MutableList<MovieFavorite>>()
     val favoriteMovie: LiveData<MutableList<MovieFavorite>>
         get() = _favoriteMovie
 
-    fun getAllFavoriteMovie(){
+//    private lateinit var favoriteMovie : LiveData<MutableList<MovieFavorite>>
+
+
+
+    fun getAllFavoriteMovie() {
         try {
             viewModelScope.launch {
                 try {
                     launch {
+//                        _favoriteMovie = movieRepository.getMovieFavorite()
+
                         movieRepository.getMovieFavorite()?.also {
                             _favoriteMovie.plusAssign(it)
                         }
